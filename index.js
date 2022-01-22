@@ -1,12 +1,23 @@
-var numberofButtons = document.querySelectorAll(".drum").length;
+// Detecting BUtton Press
 
+var numberofButtons = document.querySelectorAll(".drum").length;
 for (var i = 0; i<numberofButtons; i++) {
    
     document.querySelectorAll(".drum")[i].addEventListener("click",function(){
-        console.log(this.style.color="white");
-        var buttoninnerHTML = this.innerHTML;
+        var buttonInnerHTML = this.innerHTML;
+        makeSound(buttonInnerHTML);
+        buttonAnimation(buttonInnerHTML);
+    });
+}
 
-        switch (buttoninnerHTML){
+
+// Detecting Key press
+    document.addEventListener("keypress", function(event){
+        makeSound(event.key);
+        buttonAnimation(event.key);
+    });
+    function makeSound(key) {
+        switch (key){
             case  "w":
                 var crash = new Audio('sounds/crash.mp3');
                 crash.play();
@@ -42,10 +53,13 @@ for (var i = 0; i<numberofButtons; i++) {
                 tom4.play();
                 break;
             default: console.log(buttoninnerHTML);
-                
-        }
-    
-    });
+    }
+}
 
-    
+function buttonAnimation(currentKey){
+    var activeButton = document.querySelector("."+ currentKey)
+    activeButton.classList.add("pressed");
+    setTimeout(function() {
+    activeButton.classList.remove("pressed");
+    },100);
 }
